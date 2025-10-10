@@ -1317,29 +1317,7 @@ body {
   line-height: 1.5;
 }
 
-#recaptcha-container {
-  display: flex;
-  justify-content: center;
-  margin: 16px 0;
-  padding: 16px;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 8px;
-  border: 1px solid var(--border);
-}
-
-/* reCAPTCHA error styling */
-#recaptcha-error {
-  color: #ff6b6b;
-  font-size: 14px;
-  margin-top: 8px;
-  text-align: center;
-}
-
-/* Light theme reCAPTCHA */
-[data-theme="light"] #recaptcha-container {
-  background: rgba(0, 0, 0, 0.02);
-  border-color: var(--border);
-}
+/* reCAPTCHA styles removed */
 
 /* Light theme support for contact section */
 [data-theme="light"] .contact-section {

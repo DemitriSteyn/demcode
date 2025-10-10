@@ -2,7 +2,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Configuration - Replace with your actual keys
     const CONFIG = {
-        RECAPTCHA_SITE_KEY: '6LdnOs0rAAAAABlViKTOZK7AdYCo8q6hDPD7Pi7-', // Replace with your reCAPTCHA site key
         SUPABASE_URL: 'https://your-project.supabase.co', // Replace with your Supabase URL
         SUPABASE_ANON_KEY: 'your-supabase-anon-key', // Replace with your Supabase anon key
         MAILERSEND_API_KEY: 'mlsn.52acc0fefa865872fc1b4853a3216835aad3b539ff5b79fb7f41388b202fff45', // Replace with your MailerSend API key
@@ -45,38 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
-    // Initialize reCAPTCHA v2
-    function initializeRecaptcha() {
-        if (typeof grecaptcha !== 'undefined') {
-            grecaptcha.ready(function() {
-                grecaptcha.render('recaptcha-container', {
-                    'sitekey': CONFIG.RECAPTCHA_SITE_KEY,
-                    'callback': function(token) {
-                        console.log('reCAPTCHA verified:', token);
-                        // Clear any error messages when reCAPTCHA is completed
-                        const errorElement = document.getElementById('recaptcha-error');
-                        if (errorElement) {
-                            errorElement.textContent = '';
-                        }
-                    },
-                    'expired-callback': function() {
-                        console.log('reCAPTCHA expired');
-                    },
-                    'error-callback': function() {
-                        console.log('reCAPTCHA error');
-                        const errorElement = document.getElementById('recaptcha-error');
-                        if (errorElement) {
-                            errorElement.textContent = 'reCAPTCHA failed to load. Please refresh the page.';
-                        }
-                    }
-                });
-                console.log('reCAPTCHA v2 rendered');
-            });
-        } else {
-            console.log('reCAPTCHA not loaded yet, retrying...');
-            setTimeout(initializeRecaptcha, 1000);
-        }
-    }
+    // reCAPTCHA removed — no initialization required
 
     // Validate form field
     function validateField(fieldName, value) {
@@ -108,16 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        // Check reCAPTCHA
-        const recaptchaResponse = grecaptcha.getResponse();
-        if (!recaptchaResponse) {
-            document.getElementById('recaptcha-error').textContent = 'Please complete the reCAPTCHA verification';
-            document.getElementById('recaptcha-error').style.display = 'block';
-            isValid = false;
-        } else {
-            document.getElementById('recaptcha-error').textContent = '';
-            document.getElementById('recaptcha-error').style.display = 'none';
-        }
+        // reCAPTCHA removed — skip captcha validation
 
         return isValid;
     }
@@ -143,7 +102,6 @@ document.addEventListener('DOMContentLoaded', function() {
         formSuccess.style.display = 'block';
         formError.style.display = 'none';
         form.reset();
-        grecaptcha.reset();
     }
 
     // Show error message
@@ -245,17 +203,7 @@ document.addEventListener('DOMContentLoaded', function() {
         showLoading();
 
         try {
-            // Check if reCAPTCHA is completed
-            const recaptchaResponse = grecaptcha.getResponse();
-            if (!recaptchaResponse) {
-                const errorElement = document.getElementById('recaptcha-error');
-                if (errorElement) {
-                    errorElement.textContent = 'Please complete the reCAPTCHA verification.';
-                }
-                hideLoading();
-                return;
-            }
-            console.log('reCAPTCHA token:', recaptchaResponse);
+            // reCAPTCHA removed — proceed without captcha
 
             // Save to Supabase
             await saveToSupabase(formData);
@@ -299,9 +247,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize everything
     function init() {
-        // Initialize reCAPTCHA
-        initializeRecaptcha();
-        
         // Add form event listener
         form.addEventListener('submit', handleSubmit);
         
